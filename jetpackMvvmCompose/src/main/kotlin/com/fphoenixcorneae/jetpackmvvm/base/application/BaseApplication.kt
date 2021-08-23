@@ -5,8 +5,8 @@ import android.content.Context
 import androidx.multidex.MultiDex
 
 /**
- * @desc：BaseApplication
- * @date：2021-04-11 17:27
+ * @desc：Application 基类
+ * @date：2021/08/23 10:23
  */
 open class BaseApplication : Application() {
 

@@ -1,34 +1,32 @@
-package com.fphoenixcorneae.jetpackmvvm.base.dialog
+package com.fphoenixcorneae.jetpackmvvm.base.fragment
 
-import android.app.Activity
-import android.app.Dialog
-import android.content.Context
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.AlertDialog
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import com.fphoenixcorneae.jetpackmvvm.R
+import com.fphoenixcorneae.jetpackmvvm.lifecycle.FragmentLifecycleImpl
 import com.fphoenixcorneae.jetpackmvvm.theme.ComposeTheme
 import com.fphoenixcorneae.jetpackmvvm.theme.SystemUiController
 import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
 import kotlinx.coroutines.delay
 
 /**
- * @desc：Dialog 基类
- * @date：2021/08/20 17:36
+ * @desc：Fragment 基类
+ * @date：2021/08/23 10:22
  */
-abstract class BaseDialog() : DialogFragment() {
+abstract class BaseFragment : Fragment() {
+
+    init {
+        lifecycle.addObserver(FragmentLifecycleImpl())
+    }
 
     /** 是否第一次加载 */
     private var isFirst: Boolean = true
@@ -45,27 +43,6 @@ abstract class BaseDialog() : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
         initView()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.apply {
-            // 是否可点击外部消失
-            setCanceledOnTouchOutside(true)
-            // 是否可取消
-            setCancelable(true)
-            window?.apply {
-                // 去掉 dialog 默认的 padding
-                decorView.setPadding(0, 0, 0, 0)
-                setBackgroundDrawable(getBackground())
-                setGravity(getGravity())
-                setLayout(getWidth(), getHeight())
-                attributes = attributes?.apply {
-                    windowAnimations = getWindowAnimations()
-                    dimAmount = getDimAmount()
-                }
-            }
-        }
     }
 
     override fun onResume() {
@@ -99,7 +76,6 @@ abstract class BaseDialog() : DialogFragment() {
         return 300
     }
 
-
     fun setRealContent(content: @Composable (MutableState<ThemeState>) -> Unit) {
         mRootView?.apply {
             setContent {
@@ -115,56 +91,6 @@ abstract class BaseDialog() : DialogFragment() {
     abstract fun initView()
 
     abstract fun initData()
-
-    /**
-     * 若要修改背景可重写该方法
-     */
-    protected open fun getBackground(): Drawable {
-        return ColorDrawable()
-    }
-
-    /**
-     * 若要修改重力方向可重写该方法
-     */
-    protected open fun getGravity(): Int {
-        return Gravity.CENTER
-    }
-
-    /**
-     * 若要修改弹窗动画可重写该方法
-     */
-    protected open fun getWindowAnimations(): Int {
-        return R.style.DialogAnimation
-    }
-
-    /**
-     * 若要修改宽度可重写该方法
-     */
-    protected open fun getWidth(): Int {
-        return WRAP_CONTENT
-    }
-
-    /**
-     * 若要修改高度可重写该方法
-     */
-    protected open fun getHeight(): Int {
-        return WRAP_CONTENT
-    }
-
-    /**
-     * 若要修改模糊度可重写该方法
-     */
-    protected open fun getDimAmount(): Float {
-        return 0.4f
-    }
-
-    fun show(activity: FragmentActivity) {
-        super.show(activity.supportFragmentManager, null)
-    }
-
-    fun show(fragment: Fragment) {
-        super.show(fragment.childFragmentManager, null)
-    }
 
     @Composable
     fun RootView(
@@ -184,9 +110,4 @@ abstract class BaseDialog() : DialogFragment() {
 
     @Composable
     fun getLocalContext() = LocalContext.current
-
-    companion object {
-        const val MATCH_PARENT = WindowManager.LayoutParams.MATCH_PARENT
-        const val WRAP_CONTENT = WindowManager.LayoutParams.WRAP_CONTENT
-    }
 }

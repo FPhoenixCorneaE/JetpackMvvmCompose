@@ -14,7 +14,7 @@ import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
 
 /**
  * @desc：Activity 基类
- * @date：2021/1/15 21:07
+ * @date：2021/08/23 10:23
  */
 abstract class BaseActivity : ComponentActivity() {
 
