@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/jm_string_status_loading_text"
-            android:textColor="@color/jm_color_title_0x222222"
+            android:textColor="@color/jm_color_title"
             android:textSize="16sp" />
     </LinearLayout>
 </RelativeLayout>

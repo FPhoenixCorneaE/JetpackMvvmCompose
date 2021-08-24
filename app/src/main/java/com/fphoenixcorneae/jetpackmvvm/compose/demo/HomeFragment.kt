@@ -15,11 +15,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fphoenixcorneae.jetpackmvvm.base.fragment.BaseFragment
+import com.fphoenixcorneae.jetpackmvvm.widget.Toolbar
+import com.fphoenixcorneae.toolbar.CommonToolbar
 
-class HomeFragment:BaseFragment() {
+class HomeFragment : BaseFragment() {
     override fun initView() {
         setRealContent {
             Column {
+                // 标题栏
+                Toolbar(
+                    onToolbarClick = { v, action, extra ->
+                        if (action == CommonToolbar.TYPE_LEFT_IMAGE_BUTTON) {
+                            requireActivity().onBackPressed()
+                        }
+                    }
+                ) {
+                    // 设置标题栏属性
+                    centerText = context.getString(R.string.app_name)
+                }
                 Text(
                     text = "弹窗",
                     style = MaterialTheme.typography.button,

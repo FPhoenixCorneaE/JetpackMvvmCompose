@@ -24,11 +24,18 @@ abstract class BaseActivity : ComponentActivity() {
         initData()
     }
 
-    fun setRealContent(content: @Composable (MutableState<ThemeState>) -> Unit) {
+    fun setRealContent(
+        content: @Composable (MutableState<ThemeState>) -> Unit,
+    ) {
         setContent {
-            val themeState = remember { mutableStateOf(ThemeState()) }
+            // 系统状态栏、底部导航栏控制器
             val systemUiController = remember { SystemUiController(window) }
-            RootView(themeState.value, systemUiController) {
+            // 主题状态
+            val themeState = remember { mutableStateOf(ThemeState()) }
+            RootView(
+                systemUiController = systemUiController,
+                themeState = themeState.value,
+            ) {
                 content(themeState)
             }
         }
@@ -40,16 +47,19 @@ abstract class BaseActivity : ComponentActivity() {
 
     @Composable
     fun RootView(
-        themeState: ThemeState,
         systemUiController: SystemUiController? = null,
+        themeState: ThemeState = ThemeState(),
         content: @Composable () -> Unit,
     ) {
+        // 设置状态栏颜色
         systemUiController?.setStatusBarColor(color = themeState.statusBarColor, darkIcons = themeState.darkTheme)
+        // 主题
         ComposeTheme(
             darkTheme = themeState.darkTheme,
             darkColors = themeState.darkColors,
             lightColors = themeState.lightColors
         ) {
+            // 内容视图
             content()
         }
     }

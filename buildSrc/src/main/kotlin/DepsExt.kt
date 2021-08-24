@@ -52,6 +52,12 @@ internal val fPhoenixCornerEDependencies = listOf(
     Deps.FPhoenixCorneaE.commonToolbar,
 )
 
+internal val debugDependencies = listOf(
+    Deps.Debug.kotlinReflect,
+    Deps.Debug.uiTooling,
+    Deps.Debug.uiTestManifest,
+)
+
 internal val testDependencies = listOf(
     Deps.Test.junit,
     Deps.Test.kotlinTest,
@@ -124,6 +130,15 @@ fun DependencyHandler.addThirdPartyDependencies() {
 fun DependencyHandler.addFPhoenixCorneaEDependencies() {
     fPhoenixCornerEDependencies.forEach {
         add("api", it)
+    }
+}
+
+/**
+ * 添加调试依赖库
+ */
+fun DependencyHandler.addDebugDependencies() {
+    debugDependencies.forEach {
+        add("debugImplementation", it)
     }
 }
 

@@ -8,7 +8,6 @@ plugins {
 android {
     defaultConfig {
         applicationId = DefaultConfig.applicationId
-        buildToolsVersion = DefaultConfig.buildToolsVersion
         compileSdk = DefaultConfig.compileSdkVersion
         minSdk = DefaultConfig.minSdkVersion
         targetSdk = DefaultConfig.targetSdkVersion
@@ -90,6 +89,7 @@ dependencies {
     addAndroidXDependencies()
     implementation(project(mapOf("path" to ":jetpackMvvmCompose")))
     //    implementation(Deps.FPhoenixCorneaE.jetpackMvvm)
+    addDebugDependencies()
     addTestDependencies()
     addAndroidTestDependencies()
 }

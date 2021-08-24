@@ -15,7 +15,7 @@ object Deps {
     }
 
     object GradlePlugin {
-        const val gradle = "com.android.tools.build:gradle:7.0.0"
+        const val gradle = "com.android.tools.build:gradle:7.0.1"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.kotlinVersion}"
     }
 
@@ -91,6 +91,15 @@ object Deps {
      */
     object ThirdParty {
         const val mmkv = "com.tencent:mmkv-static:1.2.9"
+    }
+
+    /**
+     * Debug
+     */
+    object Debug {
+        const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Kotlin.kotlinVersion}"
+        const val uiTooling = "androidx.compose.ui:ui-tooling:${Compose.version}"
+        const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:${Compose.version}"
     }
 
     /**
