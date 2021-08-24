@@ -13,5 +13,5 @@
     <TextView
         android:id="@+id/empty_text"
         style="@style/MultipleStatusView.Content"
-        android:text="@string/jm_string_status_empty_text" />
+        android:text="@string/jm_ui_state_empty" />
 </RelativeLayout>

@@ -1,22 +1,39 @@
 package com.fphoenixcorneae.jetpackmvvm.base.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import com.fphoenixcorneae.ext.logd
 import com.fphoenixcorneae.jetpackmvvm.theme.ComposeTheme
 import com.fphoenixcorneae.jetpackmvvm.theme.SystemUiController
 import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
+import com.fphoenixcorneae.jetpackmvvm.uistate.*
+import com.fphoenixcorneae.jetpackmvvm.widget.Toolbar
+import com.fphoenixcorneae.toolbar.CommonToolbar
 
 /**
  * @desc：Activity 基类
  * @date：2021/08/23 10:23
  */
 abstract class BaseActivity : ComponentActivity() {
+
+    /** ui 状态视图模型 */
+    protected val uiStateViewModel by viewModels<UiStateViewModel>()
+
+    /** 标题栏点击 */
+    protected var onToolbarClick: ((View, Int, CharSequence?) -> Unit)? = { v, action, extra ->
+        if (action == CommonToolbar.TYPE_LEFT_IMAGE_BUTTON) {
+            onBackPressed()
+        }
+    }
+
+    /** 标题栏属性设置 */
+    protected var onToolbarUpdate: (CommonToolbar.() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +53,33 @@ abstract class BaseActivity : ComponentActivity() {
                 systemUiController = systemUiController,
                 themeState = themeState.value,
             ) {
-                content(themeState)
+                // ui 状态
+                val uiState by uiStateViewModel.uiState.collectAsState()
+                Box {
+                    uiState.toString().logd("uiState")
+                    when (uiState) {
+                        is UiState.ShowContent -> content(themeState)
+                        is UiState.ShowLoading -> UiLoading((uiState as UiState.ShowLoading).loadingMsg)
+                        is UiState.ShowEmpty -> UiEmpty((uiState as UiState.ShowEmpty).emptyMsg)
+                        is UiState.ShowError -> UiError((uiState as UiState.ShowError).errorMsg)
+                        is UiState.ShowNoNetwork -> UiNoNetwork(
+                            (uiState as UiState.ShowNoNetwork).imageData,
+                            (uiState as UiState.ShowNoNetwork).noNetworkMsg
+                        )
+                    }
+                    // 标题栏
+                    Toolbar(onToolbarClick = onToolbarClick) {
+                        // 设置标题栏属性
+                        onToolbarUpdate?.invoke(this)
+                    }
+                }
             }
         }
     }
 
     abstract fun initView()
+
+    abstract fun initListener()
 
     abstract fun initData()
 

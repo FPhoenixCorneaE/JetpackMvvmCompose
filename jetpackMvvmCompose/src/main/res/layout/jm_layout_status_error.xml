@@ -13,5 +13,5 @@
     <TextView
         android:id="@+id/error_text"
         style="@style/MultipleStatusView.Content"
-        android:text="@string/jm_string_status_error_text" />
+        android:text="@string/jm_ui_state_error" />
 </RelativeLayout>

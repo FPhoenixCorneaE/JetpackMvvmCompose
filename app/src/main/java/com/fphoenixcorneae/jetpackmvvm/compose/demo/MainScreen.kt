@@ -20,12 +20,13 @@ import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fphoenixcorneae.ext.startKtxActivity
 import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
 
 @SuppressLint("ResourceType")
 @Composable
-fun MainScreen(themeState: MutableState<ThemeState>, localContext: Context) {
+fun MainScreen(themeState: MutableState<ThemeState>, localContext: Context, mainViewModel: MainViewModel) {
     Column(
         modifier = Modifier
             .padding(top = 64.dp)
@@ -62,13 +63,30 @@ fun MainScreen(themeState: MutableState<ThemeState>, localContext: Context) {
                 }
                 .padding(12.dp)
         )
+        Text(
+            text = "Hello World!",
+            style = MaterialTheme.typography.button,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .height(48.dp)
+                .border(width = 2.dp, color = Color.Red, shape = RoundedCornerShape(8.dp))
+                .background(color = Color.Gray, shape = RoundedCornerShape(8.dp))
+                .clickable {
+                    mainViewModel.helloWorld()
+                }
+                .padding(12.dp)
+        )
     }
 }
 
 @Preview
 @Composable
 fun PreviewMainScreen() {
-    MainScreen(themeState = remember {
-        mutableStateOf(ThemeState())
-    }, localContext = LocalContext.current)
+    MainScreen(
+        themeState = remember { mutableStateOf(ThemeState()) },
+        localContext = LocalContext.current,
+        viewModel<MainViewModel>()
+    )
 }

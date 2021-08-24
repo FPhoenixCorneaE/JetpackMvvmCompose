@@ -1,9 +1,6 @@
 package com.fphoenixcorneae.jetpackmvvm.base.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.fphoenixcorneae.jetpackmvvm.livedata.Event
-import com.fphoenixcorneae.jetpackmvvm.uistate.UiState
-import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * @desc：ViewModel 的基类
@@ -11,6 +8,5 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 open class BaseViewModel : ViewModel() {
 
-    val uiState by lazy { MutableStateFlow(Event(UiState.ShowContent)) }
 }
 

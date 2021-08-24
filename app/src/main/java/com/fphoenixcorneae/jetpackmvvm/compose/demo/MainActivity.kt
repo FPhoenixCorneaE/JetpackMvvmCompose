@@ -1,32 +1,35 @@
 package com.fphoenixcorneae.jetpackmvvm.compose.demo
 
-import androidx.compose.foundation.layout.Box
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fphoenixcorneae.jetpackmvvm.base.activity.BaseActivity
-import com.fphoenixcorneae.jetpackmvvm.widget.Toolbar
-import com.fphoenixcorneae.toolbar.CommonToolbar
+import kotlinx.coroutines.delay
 
 class MainActivity : BaseActivity() {
 
     override fun initView() {
         setRealContent { themeState ->
-            Box {
-                MainScreen(themeState, getLocalContext())
-                // 标题栏
-                Toolbar(
-                    onToolbarClick = { v, action, extra ->
-                        if (action == CommonToolbar.TYPE_LEFT_IMAGE_BUTTON) {
-                            onBackPressed()
-                        }
-                    }
-                ) {
-                    // 设置标题栏属性
-                    centerText = context.getString(R.string.app_name)
-                }
-            }
+            MainScreen(themeState, getLocalContext(), viewModel<MainViewModel>())
+        }
+
+        onToolbarUpdate = {
+            // 设置标题栏属性
+            centerText = context.getString(R.string.app_name)
         }
     }
 
-    override fun initData() {
+    override fun initListener() {
+
     }
 
+    override fun initData() {
+        uiStateViewModel.showLoading("正在拼命加载中...")
+        lifecycleScope.launchWhenResumed {
+            delay(2000)
+            uiStateViewModel.showContent()
+//            uiStateViewModel.showEmpty()
+//            uiStateViewModel.showError()
+//            uiStateViewModel.showNoNetwork()
+        }
+    }
 }
