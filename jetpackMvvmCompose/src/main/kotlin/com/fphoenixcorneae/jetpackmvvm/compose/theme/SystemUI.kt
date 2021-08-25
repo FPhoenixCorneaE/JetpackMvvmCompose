@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.theme
+package com.fphoenixcorneae.jetpackmvvm.compose.theme
 
 // Taken from
 // https://gist.github.com/chrisbanes/ab31bf7b67b77948157687af010f0667#file-systemui-kt

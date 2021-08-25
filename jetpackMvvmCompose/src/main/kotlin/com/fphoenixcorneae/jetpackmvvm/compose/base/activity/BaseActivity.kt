@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.base.activity
+package com.fphoenixcorneae.jetpackmvvm.compose.base.activity
 
 import android.os.Bundle
 import android.view.View
@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.fphoenixcorneae.ext.logd
-import com.fphoenixcorneae.jetpackmvvm.theme.ComposeTheme
-import com.fphoenixcorneae.jetpackmvvm.theme.SystemUiController
-import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
-import com.fphoenixcorneae.jetpackmvvm.uistate.*
-import com.fphoenixcorneae.jetpackmvvm.widget.Toolbar
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ComposeTheme
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.SystemUiController
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ThemeState
+import com.fphoenixcorneae.jetpackmvvm.compose.uistate.*
+import com.fphoenixcorneae.jetpackmvvm.compose.widget.Toolbar
 import com.fphoenixcorneae.toolbar.CommonToolbar
 
 /**
@@ -38,6 +38,7 @@ abstract class BaseActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
+        initListener()
         initData()
     }
 
@@ -49,6 +50,7 @@ abstract class BaseActivity : ComponentActivity() {
             val systemUiController = remember { SystemUiController(window) }
             // 主题状态
             val themeState = remember { mutableStateOf(ThemeState()) }
+            // 跟视图
             RootView(
                 systemUiController = systemUiController,
                 themeState = themeState.value,

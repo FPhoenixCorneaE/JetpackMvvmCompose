@@ -1,13 +1,10 @@
-package com.fphoenixcorneae.jetpackmvvm.base.dialog
+package com.fphoenixcorneae.jetpackmvvm.compose.base.dialog
 
-import android.app.Activity
-import android.app.Dialog
-import android.content.Context
+import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -19,22 +16,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.fphoenixcorneae.jetpackmvvm.R
-import com.fphoenixcorneae.jetpackmvvm.theme.ComposeTheme
-import com.fphoenixcorneae.jetpackmvvm.theme.SystemUiController
-import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ComposeTheme
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.SystemUiController
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ThemeState
 import kotlinx.coroutines.delay
 
 /**
  * @desc：Dialog 基类
  * @date：2021/08/20 17:36
  */
-abstract class BaseDialog() : DialogFragment() {
+abstract class BaseDialog : DialogFragment() {
 
     /** 是否第一次加载 */
     private var isFirst: Boolean = true
 
     /** 跟视图 */
     private var mRootView: ComposeView? = null
+
+    /** 解散监听 */
+    private var mOnDismissListener: ((DialogInterface) -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mRootView = ComposeView(requireContext())
@@ -45,6 +45,7 @@ abstract class BaseDialog() : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
         initView()
+        initListener()
     }
 
     override fun onStart() {
@@ -114,6 +115,8 @@ abstract class BaseDialog() : DialogFragment() {
 
     abstract fun initView()
 
+    abstract fun initListener()
+
     abstract fun initData()
 
     /**
@@ -158,12 +161,21 @@ abstract class BaseDialog() : DialogFragment() {
         return 0.4f
     }
 
-    fun show(activity: FragmentActivity) {
-        super.show(activity.supportFragmentManager, null)
+    fun show(activity: FragmentActivity, tag: String? = null) {
+        super.show(activity.supportFragmentManager, tag)
     }
 
-    fun show(fragment: Fragment) {
-        super.show(fragment.childFragmentManager, null)
+    fun show(fragment: Fragment, tag: String? = null) {
+        super.show(fragment.childFragmentManager, tag)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        mOnDismissListener?.invoke(dialog)
+    }
+
+    fun setOnDismissListener(onDismissListener: (DialogInterface) -> Unit) = apply {
+        mOnDismissListener = onDismissListener
     }
 
     @Composable

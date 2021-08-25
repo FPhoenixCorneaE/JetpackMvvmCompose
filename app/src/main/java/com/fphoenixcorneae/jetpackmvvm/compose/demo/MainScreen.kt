@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fphoenixcorneae.ext.startKtxActivity
-import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ThemeState
 
 @SuppressLint("ResourceType")
 @Composable

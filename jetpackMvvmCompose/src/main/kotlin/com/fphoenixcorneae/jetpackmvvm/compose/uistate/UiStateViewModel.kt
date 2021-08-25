@@ -1,6 +1,6 @@
-package com.fphoenixcorneae.jetpackmvvm.uistate
+package com.fphoenixcorneae.jetpackmvvm.compose.uistate
 
-import com.fphoenixcorneae.jetpackmvvm.base.viewmodel.BaseViewModel
+import com.fphoenixcorneae.jetpackmvvm.compose.base.viewmodel.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

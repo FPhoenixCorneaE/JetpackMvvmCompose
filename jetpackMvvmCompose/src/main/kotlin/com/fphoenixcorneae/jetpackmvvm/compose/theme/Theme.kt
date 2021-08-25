@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.theme
+package com.fphoenixcorneae.jetpackmvvm.compose.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

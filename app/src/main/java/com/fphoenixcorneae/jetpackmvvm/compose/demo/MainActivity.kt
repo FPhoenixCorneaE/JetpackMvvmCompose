@@ -2,8 +2,12 @@ package com.fphoenixcorneae.jetpackmvvm.compose.demo
 
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.fphoenixcorneae.jetpackmvvm.base.activity.BaseActivity
+import com.fphoenixcorneae.ext.logd
+import com.fphoenixcorneae.jetpackmvvm.compose.base.activity.BaseActivity
+import com.fphoenixcorneae.jetpackmvvm.ext.networkViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
@@ -19,7 +23,11 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initListener() {
-
+        lifecycleScope.launch {
+            networkViewModel.networkState.collect {
+                "NetworkState: ${it.isConnected}".logd()
+            }
+        }
     }
 
     override fun initData() {
@@ -27,9 +35,9 @@ class MainActivity : BaseActivity() {
         lifecycleScope.launchWhenResumed {
             delay(2000)
             uiStateViewModel.showContent()
-//            uiStateViewModel.showEmpty()
-//            uiStateViewModel.showError()
-//            uiStateViewModel.showNoNetwork()
+            //            uiStateViewModel.showEmpty()
+            //            uiStateViewModel.showError()
+            //            uiStateViewModel.showNoNetwork()
         }
     }
 }

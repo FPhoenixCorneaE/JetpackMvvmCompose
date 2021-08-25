@@ -13,11 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fphoenixcorneae.ext.dp2Px
-import com.fphoenixcorneae.ext.dpToPx
 import com.fphoenixcorneae.ext.toast
-import com.fphoenixcorneae.jetpackmvvm.base.dialog.BaseDialog
+import com.fphoenixcorneae.jetpackmvvm.compose.base.dialog.BaseDialog
 
-class SimpleDialog() : BaseDialog() {
+class SimpleDialog : BaseDialog() {
 
     override fun initView() {
         setRealContent { themeState ->
@@ -45,6 +44,9 @@ class SimpleDialog() : BaseDialog() {
                 )
             }
         }
+    }
+
+    override fun initListener() {
     }
 
     override fun initData() {

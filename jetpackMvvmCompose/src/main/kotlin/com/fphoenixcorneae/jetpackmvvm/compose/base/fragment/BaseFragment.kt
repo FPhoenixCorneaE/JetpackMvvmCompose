@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.base.fragment
+package com.fphoenixcorneae.jetpackmvvm.compose.base.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.fphoenixcorneae.jetpackmvvm.lifecycle.FragmentLifecycleImpl
-import com.fphoenixcorneae.jetpackmvvm.theme.ComposeTheme
-import com.fphoenixcorneae.jetpackmvvm.theme.SystemUiController
-import com.fphoenixcorneae.jetpackmvvm.theme.ThemeState
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ComposeTheme
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.SystemUiController
+import com.fphoenixcorneae.jetpackmvvm.compose.theme.ThemeState
 import kotlinx.coroutines.delay
 
 /**
@@ -43,6 +43,7 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
         initView()
+        initListener()
     }
 
     override fun onResume() {
@@ -89,6 +90,8 @@ abstract class BaseFragment : Fragment() {
     }
 
     abstract fun initView()
+
+    abstract fun initListener()
 
     abstract fun initData()
 

@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.widget
+package com.fphoenixcorneae.jetpackmvvm.compose.widget
 
 import android.content.Context
 import android.view.View

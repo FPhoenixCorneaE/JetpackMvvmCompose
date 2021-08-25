@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.base.viewmodel
+package com.fphoenixcorneae.jetpackmvvm.compose.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 

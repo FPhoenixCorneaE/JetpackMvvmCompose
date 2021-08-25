@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.fphoenixcorneae.jetpackmvvm.base.fragment.BaseFragment
-import com.fphoenixcorneae.jetpackmvvm.widget.Toolbar
+import com.fphoenixcorneae.jetpackmvvm.compose.base.fragment.BaseFragment
+import com.fphoenixcorneae.jetpackmvvm.compose.widget.Toolbar
 import com.fphoenixcorneae.toolbar.CommonToolbar
 
 class HomeFragment : BaseFragment() {
@@ -50,6 +50,9 @@ class HomeFragment : BaseFragment() {
                 )
             }
         }
+    }
+
+    override fun initListener() {
     }
 
     override fun initData() {

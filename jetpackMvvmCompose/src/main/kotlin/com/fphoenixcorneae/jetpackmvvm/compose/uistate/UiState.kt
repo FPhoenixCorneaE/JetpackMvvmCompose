@@ -1,4 +1,4 @@
-package com.fphoenixcorneae.jetpackmvvm.uistate
+package com.fphoenixcorneae.jetpackmvvm.compose.uistate
 
 /**
  * @desc：UiState
