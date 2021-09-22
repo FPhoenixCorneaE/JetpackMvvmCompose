@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDex
-import com.fphoenixcorneae.jetpackmvvm.network.NetworkViewModel
 
 /**
  * @desc：Application 基类
@@ -24,7 +23,7 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
 
     override fun onCreate() {
         super.onCreate()
-        networkViewModel = getAndroidViewModel(NetworkViewModel::class.java)
+        sInstance = this
     }
 
     override fun getViewModelStore(): ViewModelStore {
@@ -43,6 +42,10 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
     }
 
     companion object {
-        lateinit var networkViewModel: NetworkViewModel
+        @Volatile
+        private var sInstance: BaseApplication? = null
+
+        @Synchronized
+        fun getInstance(): BaseApplication = sInstance!!
     }
 }
