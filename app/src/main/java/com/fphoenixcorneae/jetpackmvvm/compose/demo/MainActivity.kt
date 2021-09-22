@@ -6,7 +6,6 @@ import com.fphoenixcorneae.ext.logd
 import com.fphoenixcorneae.jetpackmvvm.compose.base.activity.BaseActivity
 import com.fphoenixcorneae.jetpackmvvm.ext.networkViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
@@ -24,8 +23,8 @@ class MainActivity : BaseActivity() {
 
     override fun initListener() {
         lifecycleScope.launch {
-            networkViewModel.networkState.collect {
-                "NetworkState: ${it.isConnected}".logd()
+            networkViewModel.networkState.observe(this@MainActivity) {
+                "NetworkState: $it".logd()
             }
         }
     }
