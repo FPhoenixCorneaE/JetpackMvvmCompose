@@ -39,4 +39,6 @@ class MainActivity : BaseActivity() {
             //            uiStateViewModel.showNoNetwork()
         }
     }
+
+    override fun toolbarVisible() = false
 }

@@ -69,10 +69,12 @@ abstract class BaseActivity : ComponentActivity() {
                             (uiState as UiState.ShowNoNetwork).noNetworkMsg
                         )
                     }
-                    // 标题栏
-                    Toolbar(onToolbarClick = onToolbarClick) {
-                        // 设置标题栏属性
-                        onToolbarUpdate?.invoke(this)
+                    if (toolbarVisible()) {
+                        // 标题栏
+                        Toolbar(onToolbarClick = onToolbarClick) {
+                            // 设置标题栏属性
+                            onToolbarUpdate?.invoke(this)
+                        }
                     }
                 }
             }
@@ -106,4 +108,9 @@ abstract class BaseActivity : ComponentActivity() {
 
     @Composable
     fun getLocalContext() = LocalContext.current
+
+    /**
+     * 标题栏可见性
+     */
+    open fun toolbarVisible() = true
 }
