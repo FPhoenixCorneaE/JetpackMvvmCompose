@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
@@ -14,6 +13,7 @@ import com.fphoenixcorneae.jetpackmvvm.compose.theme.SystemUiController
 import com.fphoenixcorneae.jetpackmvvm.compose.theme.ThemeState
 import com.fphoenixcorneae.jetpackmvvm.compose.uistate.*
 import com.fphoenixcorneae.jetpackmvvm.compose.widget.Toolbar
+import com.fphoenixcorneae.jetpackmvvm.ext.uiStateViewModel
 import com.fphoenixcorneae.toolbar.CommonToolbar
 
 /**
@@ -21,9 +21,6 @@ import com.fphoenixcorneae.toolbar.CommonToolbar
  * @date：2021/08/23 10:23
  */
 abstract class BaseActivity : ComponentActivity() {
-
-    /** ui 状态视图模型 */
-    protected val uiStateViewModel by viewModels<UiStateViewModel>()
 
     /** 标题栏点击 */
     protected var onToolbarClick: ((View, Int, CharSequence?) -> Unit)? = { v, action, extra ->
@@ -62,12 +59,12 @@ abstract class BaseActivity : ComponentActivity() {
                     when (uiState) {
                         is UiState.ShowContent -> content(themeState)
                         is UiState.ShowLoading -> UiLoading((uiState as UiState.ShowLoading).loadingMsg)
-                        is UiState.ShowEmpty -> UiEmpty((uiState as UiState.ShowEmpty).emptyMsg)
-                        is UiState.ShowError -> UiError((uiState as UiState.ShowError).errorMsg)
+                        is UiState.ShowEmpty -> UiEmpty((uiState as UiState.ShowEmpty).emptyMsg) { initData() }
+                        is UiState.ShowError -> UiError((uiState as UiState.ShowError).errorMsg) { initData() }
                         is UiState.ShowNoNetwork -> UiNoNetwork(
                             (uiState as UiState.ShowNoNetwork).imageData,
                             (uiState as UiState.ShowNoNetwork).noNetworkMsg
-                        )
+                        ) { initData() }
                     }
                     if (toolbarVisible()) {
                         // 标题栏

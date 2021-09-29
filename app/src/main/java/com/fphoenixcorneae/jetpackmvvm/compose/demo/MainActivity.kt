@@ -1,10 +1,10 @@
 package com.fphoenixcorneae.jetpackmvvm.compose.demo
 
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fphoenixcorneae.ext.logd
 import com.fphoenixcorneae.jetpackmvvm.compose.base.activity.BaseActivity
 import com.fphoenixcorneae.jetpackmvvm.ext.networkViewModel
+import com.fphoenixcorneae.jetpackmvvm.ext.uiStateViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -12,7 +12,7 @@ class MainActivity : BaseActivity() {
 
     override fun initView() {
         setRealContent { themeState ->
-            MainScreen(themeState, getLocalContext(), viewModel<MainViewModel>())
+            MainScreen(themeState = themeState, localContext = getLocalContext())
         }
 
         onToolbarUpdate = {

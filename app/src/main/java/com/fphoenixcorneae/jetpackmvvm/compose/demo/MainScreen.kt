@@ -26,7 +26,11 @@ import com.fphoenixcorneae.jetpackmvvm.compose.theme.ThemeState
 
 @SuppressLint("ResourceType")
 @Composable
-fun MainScreen(themeState: MutableState<ThemeState>, localContext: Context, mainViewModel: MainViewModel) {
+fun MainScreen(
+    themeState: MutableState<ThemeState>,
+    localContext: Context,
+    mainViewModel: MainViewModel = viewModel()
+) {
     Column(
         modifier = Modifier
             .padding(top = 64.dp)
@@ -87,6 +91,5 @@ fun PreviewMainScreen() {
     MainScreen(
         themeState = remember { mutableStateOf(ThemeState()) },
         localContext = LocalContext.current,
-        viewModel<MainViewModel>()
     )
 }

@@ -22,11 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toDrawable
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.fphoenixcorneae.ext.toastAliPayStyle
 import com.fphoenixcorneae.jetpackmvvm.R
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoilApi::class)
 @SuppressLint("ResourceType")
 @Composable
 fun UiNoNetwork(
