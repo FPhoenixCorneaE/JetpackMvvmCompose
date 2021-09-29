@@ -3,6 +3,7 @@ package com.fphoenixcorneae.jetpackmvvm.compose.base.activity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.*
@@ -34,6 +35,14 @@ abstract class BaseActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 按下返回键调度器
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // 返回上一个界面时重置界面状态
+                finishAfterTransition()
+                uiStateViewModel.showContent()
+            }
+        })
         initView()
         initListener()
         initData()
