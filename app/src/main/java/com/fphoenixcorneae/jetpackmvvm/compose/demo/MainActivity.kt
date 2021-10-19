@@ -1,5 +1,7 @@
 package com.fphoenixcorneae.jetpackmvvm.compose.demo
 
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.lifecycleScope
 import com.fphoenixcorneae.ext.logd
 import com.fphoenixcorneae.jetpackmvvm.compose.base.activity.BaseActivity
@@ -18,6 +20,7 @@ class MainActivity : BaseActivity() {
         onToolbarUpdate = {
             // 设置标题栏属性
             centerText = context.getString(R.string.app_name)
+            toolbarColor = Color.Cyan.toArgb()
         }
     }
 
@@ -33,12 +36,12 @@ class MainActivity : BaseActivity() {
         uiStateViewModel.showLoading("正在拼命加载中...")
         lifecycleScope.launchWhenResumed {
             delay(2000)
-            uiStateViewModel.showContent()
+//            uiStateViewModel.showContent()
             //            uiStateViewModel.showEmpty()
             //            uiStateViewModel.showError()
             //            uiStateViewModel.showNoNetwork()
         }
     }
 
-    override fun toolbarVisible() = false
+    override fun toolbarVisible() = true
 }

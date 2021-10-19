@@ -3,9 +3,10 @@ package com.fphoenixcorneae.jetpackmvvm.compose.base.activity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.fphoenixcorneae.ext.logd
@@ -35,14 +36,6 @@ abstract class BaseActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 按下返回键调度器
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // 返回上一个界面时重置界面状态
-                finishAfterTransition()
-                uiStateViewModel.showContent()
-            }
-        })
         initView()
         initListener()
         initData()
@@ -61,12 +54,30 @@ abstract class BaseActivity : ComponentActivity() {
                 systemUiController = systemUiController,
                 themeState = themeState.value,
             ) {
+                // 按下返回键调度器
+                BackHandler {
+                    // 返回上一个界面时重置界面状态
+                    finishAfterTransition()
+                    uiStateViewModel.showContent()
+                }
                 // ui 状态
                 val uiState by uiStateViewModel.uiState.collectAsState()
-                Box {
-                    uiState.toString().logd("uiState")
+                uiState.toString().logd("uiState")
+                // 内容视图
+                Crossfade(targetState = uiState) {
+                    if (it == UiState.ShowContent) {
+                        content(themeState)
+                    }
+                }
+                Column {
+                    // 标题栏
+                    if (toolbarVisible()) {
+                        Toolbar(onToolbarClick = onToolbarClick) {
+                            // 设置标题栏属性
+                            onToolbarUpdate?.invoke(this)
+                        }
+                    }
                     when (uiState) {
-                        is UiState.ShowContent -> content(themeState)
                         is UiState.ShowLoading -> UiLoading((uiState as UiState.ShowLoading).loadingMsg)
                         is UiState.ShowEmpty -> UiEmpty((uiState as UiState.ShowEmpty).emptyMsg) { initData() }
                         is UiState.ShowError -> UiError((uiState as UiState.ShowError).errorMsg) { initData() }
@@ -74,12 +85,7 @@ abstract class BaseActivity : ComponentActivity() {
                             (uiState as UiState.ShowNoNetwork).imageData,
                             (uiState as UiState.ShowNoNetwork).noNetworkMsg
                         ) { initData() }
-                    }
-                    if (toolbarVisible()) {
-                        // 标题栏
-                        Toolbar(onToolbarClick = onToolbarClick) {
-                            // 设置标题栏属性
-                            onToolbarUpdate?.invoke(this)
+                        else -> {
                         }
                     }
                 }
