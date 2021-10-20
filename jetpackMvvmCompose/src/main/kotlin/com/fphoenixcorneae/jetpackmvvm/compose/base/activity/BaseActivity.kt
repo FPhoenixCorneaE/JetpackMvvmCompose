@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
@@ -64,11 +63,7 @@ abstract class BaseActivity : ComponentActivity() {
                 val uiState by uiStateViewModel.uiState.collectAsState()
                 uiState.toString().logd("uiState")
                 // 内容视图
-                Crossfade(targetState = uiState) {
-                    if (it == UiState.ShowContent) {
-                        content(themeState)
-                    }
-                }
+                content(themeState)
                 Column {
                     // 标题栏
                     if (toolbarVisible()) {

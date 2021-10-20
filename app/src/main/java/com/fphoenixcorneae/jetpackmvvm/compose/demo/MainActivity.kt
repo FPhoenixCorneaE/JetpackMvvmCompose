@@ -14,13 +14,13 @@ class MainActivity : BaseActivity() {
 
     override fun initView() {
         setRealContent { themeState ->
-            MainScreen(themeState = themeState, localContext = getLocalContext())
+            MainScreen(themeState = themeState, context = getLocalContext())
         }
 
         onToolbarUpdate = {
             // 设置标题栏属性
             centerText = context.getString(R.string.app_name)
-            toolbarColor = Color.Cyan.toArgb()
+            toolbarColor = Color.White.toArgb()
         }
     }
 
@@ -35,8 +35,8 @@ class MainActivity : BaseActivity() {
     override fun initData() {
         uiStateViewModel.showLoading("正在拼命加载中...")
         lifecycleScope.launchWhenResumed {
-            delay(2000)
-//            uiStateViewModel.showContent()
+            delay(3000)
+            uiStateViewModel.showContent()
             //            uiStateViewModel.showEmpty()
             //            uiStateViewModel.showError()
             //            uiStateViewModel.showNoNetwork()

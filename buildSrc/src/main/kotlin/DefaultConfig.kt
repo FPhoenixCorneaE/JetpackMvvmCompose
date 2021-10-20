@@ -3,6 +3,6 @@ object DefaultConfig {
     const val compileSdkVersion = 30
     const val minSdkVersion = 21
     const val targetSdkVersion = 30
-    const val versionCode = 104
-    const val versionName = "1.0.4"
+    const val versionCode = 105
+    const val versionName = "1.0.5"
 }
